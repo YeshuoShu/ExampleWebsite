@@ -64,5 +64,19 @@ async function filterData() {
   }
 }
 
+// Search data by name or description
+async function searchData() {
+  const query = document.getElementById("search-box").value.toLowerCase();
+  const response = await fetch("data.json");
+  const data = await response.json();
+
+  const filteredData = data.filter(
+    (item) =>
+      item.name.toLowerCase().includes(query) ||
+      item.description.toLowerCase().includes(query)
+  );
+  populateDataList(filteredData);
+}
+
 // Load data on page load
 fetchData();
