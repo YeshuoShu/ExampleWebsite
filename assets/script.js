@@ -4,6 +4,15 @@ async function fetchData() {
   const data = await response.json();
   populateDataList(data);
   populateTagFilter(data);
+
+  // Add an event listener for Enter key in the search box
+  document
+    .getElementById("search-box")
+    .addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        searchData();
+      }
+    });
 }
 
 // Populate data list
@@ -22,10 +31,11 @@ function populateDataList(data) {
           }" class="text-decoration-none">${item.name}</a></h5>
           <p class="card-text">${item.description}</p>
           <p><strong>Source:</strong> ${item.source}</p>
-          <p><strong>Date:</strong> ${item.date}</p>
+          <p><strong>Publication Date:</strong> ${item.publication_date}</p>
           <p><strong>Tags:</strong> ${item.tags.join(", ")}</p>
           <p><strong>Geographic Extent:</strong> ${item.geographic_extent}</p>
           <p><strong>Temporal Extent:</strong> ${item.temporal_extent}</p>
+          <p><strong>File Size:</strong> ${item.file_size}</p>
           <a href="${
             item.download_link
           }" class="btn btn-success mt-2" download>Download Link</a>
@@ -76,6 +86,13 @@ async function searchData() {
       item.description.toLowerCase().includes(query)
   );
   populateDataList(filteredData);
+}
+
+// Reset data to show all items
+async function resetData() {
+  document.getElementById("search-box").value = ""; // Clear search box
+  document.getElementById("tag-filter").value = ""; // Reset tag filter
+  fetchData(); // Reload all data
 }
 
 // Load data on page load

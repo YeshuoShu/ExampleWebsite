@@ -20,19 +20,22 @@
         <input
           type="text"
           id="search-box"
-          class="form-control w-50 me-2"
+          class="form-control w-50 me-3"
           placeholder="Search by name or description"
         />
 
         <!-- Search Button -->
-        <button class="btn btn-primary me-3" onclick="searchData()">
+        <button class="btn btn-primary me-2" onclick="searchData()">
           Search
         </button>
+
+        <!-- Home Button -->
+        <button class="btn btn-secondary me-2" onclick="resetData()">Home</button>
 
         <!-- Tags Filter -->
         <select
           id="tag-filter"
-          class="form-select w-auto"
+          class="form-select w-auto me-2"
           onchange="filterData()"
         >
           <option value="">All Tags</option>
