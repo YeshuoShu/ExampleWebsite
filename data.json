@@ -6,7 +6,7 @@
     "source": "Department of Environmental Studies",
     "date": "2023-10-01",
     "details_link": "details/dataset1.html",
-    "download_link": "https://example.com/dataset1.csv",
+    "download_link": "https://example.com/dataset1.csv"
   },
   {
     "name": "Dataset 2",
@@ -14,6 +14,7 @@
     "tags": ["population", "demographics"],
     "source": "Bureau of Population",
     "date": "2023-09-15",
-    "details_link": "details/dataset2.html"
+    "details_link": "details/dataset2.html",
+    "download_link": "https://example.com/dataset2.csv"
   }
 ]
