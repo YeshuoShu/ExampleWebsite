@@ -1,0 +1,12 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.card-title a {
+  color: #007bff;
+}
+
+.card-title a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
