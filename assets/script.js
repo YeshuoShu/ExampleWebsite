@@ -24,9 +24,11 @@ function populateDataList(data) {
           <p><strong>Source:</strong> ${item.source}</p>
           <p><strong>Date:</strong> ${item.date}</p>
           <p><strong>Tags:</strong> ${item.tags.join(", ")}</p>
+          <p><strong>Geographic Extent:</strong> ${item.geographic_extent}</p>
+          <p><strong>Temporal Extent:</strong> ${item.temporal_extent}</p>
           <a href="${
             item.download_link
-          }" class="btn btn-success mt-2" download>Download</a>
+          }" class="btn btn-success mt-2" download>Download Link</a>
         </div>
       </div>
     `;

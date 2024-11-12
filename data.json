@@ -6,6 +6,8 @@
     "source": "Department of Environmental Studies",
     "date": "2023-10-01",
     "details_link": "details/dataset1.html",
+    "geographic_extent": "34.0522N, 118.2437W - 35.0522N, 119.2437W",
+    "temporal_extent": "2023-01-01 to 2023-06-30",
     "download_link": "https://example.com/dataset1.csv"
   },
   {
@@ -15,6 +17,8 @@
     "source": "Bureau of Population",
     "date": "2023-09-15",
     "details_link": "details/dataset2.html",
+    "geographic_extent": "34.0522N, 118.2437W - 35.0522N, 119.2437W",
+    "temporal_extent": "2023-01-01 to 2023-06-30",
     "download_link": "https://example.com/dataset2.csv"
   }
 ]
