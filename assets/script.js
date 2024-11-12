@@ -15,18 +15,21 @@ function populateDataList(data) {
     const dataItem = document.createElement("div");
     dataItem.className = "col-md-6 mb-4";
     dataItem.innerHTML = `
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title"><a href="${
-              item.details_link
-            }" class="text-decoration-none">${item.name}</a></h5>
-            <p class="card-text">${item.description}</p>
-            <p><strong>Source:</strong> ${item.source}</p>
-            <p><strong>Date:</strong> ${item.date}</p>
-            <p><strong>Tags:</strong> ${item.tags.join(", ")}</p>
-          </div>
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title"><a href="${
+            item.details_link
+          }" class="text-decoration-none">${item.name}</a></h5>
+          <p class="card-text">${item.description}</p>
+          <p><strong>Source:</strong> ${item.source}</p>
+          <p><strong>Date:</strong> ${item.date}</p>
+          <p><strong>Tags:</strong> ${item.tags.join(", ")}</p>
+          <a href="${
+            item.download_link
+          }" class="btn btn-success mt-2" download>Download</a>
         </div>
-      `;
+      </div>
+    `;
     dataList.appendChild(dataItem);
   });
 }

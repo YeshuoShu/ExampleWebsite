@@ -5,7 +5,8 @@
     "tags": ["environment", "climate"],
     "source": "Department of Environmental Studies",
     "date": "2023-10-01",
-    "details_link": "details/dataset1.html"
+    "details_link": "details/dataset1.html",
+    "download_link": "https://example.com/dataset1.csv",
   },
   {
     "name": "Dataset 2",
