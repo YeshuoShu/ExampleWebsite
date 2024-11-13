@@ -100,6 +100,7 @@
       async function submitData(event) {
         event.preventDefault();
 
+        // 收集表单数据
         const data = {
           name: document.getElementById("name").value,
           description: document.getElementById("description").value,
@@ -109,15 +110,9 @@
           downloadLink: document.getElementById("downloadLink").value,
         };
 
+        // 将数据序列化为 JSON 格式
         const issueTitle = `New Data Submission: ${data.name}`;
-        const issueBody = `
-**Name**: ${data.name}
-**Description**: ${data.description}
-**Tags**: ${data.tags}
-**Source**: ${data.source}
-**Date**: ${data.date}
-**Download Link**: ${data.downloadLink}
-      `;
+        const issueBody = JSON.stringify(data, null, 2); // 直接转换为 JSON 格式字符串
 
         // GitHub Issue 提交 URL
         const url = `https://github.com/YeshuoShu/ExampleWebsite/issues/new?title=${encodeURIComponent(
