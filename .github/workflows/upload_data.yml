@@ -1,0 +1,74 @@
+name: Upload Data and Generate Details Page
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  upload_data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Parse Issue Content and Upload data.json
+        id: upload_data
+        run: |
+          ISSUE_BODY=$(echo '${{ github.event.issue.body }}')
+          echo "$ISSUE_BODY" > issue_data.json
+
+          # 提取 Issue 数据并添加到 data.json
+          node -e "
+          const fs = require('fs');
+          const newData = require('./issue_data.json');
+          const dataFilePath = './data.json';
+          let data = [];
+          if (fs.existsSync(dataFilePath)) {
+            data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
+          }
+          data.push(newData);
+          fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
+          "
+
+      - name: Generate HTML Detail Page
+        run: |
+          # 生成详情页面
+          node -e "
+          const fs = require('fs');
+          const newData = require('./issue_data.json');
+          const detailsDir = './public/details';
+          const fileName = newData.name.replace(/\\s+/g, '_').toLowerCase() + '.html';
+          const htmlContent = \`
+          <!DOCTYPE html>
+          <html lang='en'>
+          <head>
+            <meta charset='UTF-8'>
+            <title>\${newData.name} - Data Details</title>
+          </head>
+          <body>
+            <h1>\${newData.name}</h1>
+            <p>\${newData.description}</p>
+            <p><strong>Source:</strong> \${newData.source}</p>
+            <p><strong>Date:</strong> \${newData.date}</p>
+            <p><strong>Tags:</strong> \${newData.tags}</p>
+            <a href='\${newData.downloadLink}' download>Download Data</a>
+          </body>
+          </html>
+          \`;
+          fs.mkdirSync(detailsDir, { recursive: true });
+          fs.writeFileSync(\`\${detailsDir}/\${fileName}\`, htmlContent);
+          "
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add data.json public/details/
+          git commit -m "Upload data.json and add new detail page"
+          git push origin main

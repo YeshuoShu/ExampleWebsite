@@ -7,7 +7,7 @@ window.filteredData = [];
 
 // Fetch data from data.json and populate data list
 async function fetchData() {
-  const response = await fetch("data.json");
+  const response = await fetch("/data.json");
   const data = await response.json();
   window.originalData = data;
   window.filteredData = data; // Initially, filteredData equals originalData
