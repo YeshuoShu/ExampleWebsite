@@ -114,8 +114,7 @@
         const issueTitle = `New Data Submission: ${data.name}`;
 
         // 将 JSON 序列化为单行字符串
-        let issueBody = JSON.stringify(data);
-        issueBody = issueBody.replace(/(\r\n|\n|\r|\s+)/gm, '');  // 移除所有换行和多余空白字符
+        const issueBody = JSON.stringify(data);
 
         // GitHub Issue 提交 URL
         const url = `https://github.com/YeshuoShu/ExampleWebsite/issues/new?title=${encodeURIComponent(

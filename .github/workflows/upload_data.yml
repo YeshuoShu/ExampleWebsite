@@ -14,7 +14,7 @@ jobs:
 
       - name: Extract Issue Data and Update Files
         env:
-          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # 从 Issue 中获取内容并保存到 issue_data.json
           ISSUE_BODY="${{ github.event.issue.body }}"
