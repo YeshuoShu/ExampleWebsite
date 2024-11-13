@@ -9,7 +9,7 @@
     "geographic_extent": "34.0522N, 118.2437W - 35.0522N, 119.2437W",
     "temporal_extent": "2023-01-01 to 2023-06-30",
     "file_size": "10 MB",
-    "download_link": "https://example.com/dataset1.csv"
+    "original_link": "https://example.com/dataset1.csv"
   },
   {
     "name": "Dataset 2",
@@ -21,6 +21,6 @@
     "geographic_extent": "34.0522N, 118.2437W - 35.0522N, 119.2437W",
     "temporal_extent": "2023-01-01 to 2023-06-30",
     "file_size": "10 MB",
-    "download_link": "https://example.com/dataset2.csv"
+    "original_link": "https://example.com/dataset2.csv"
   }
 ]

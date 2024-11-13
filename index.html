@@ -30,7 +30,9 @@
         </button>
 
         <!-- Home Button -->
-        <button class="btn btn-secondary me-2" onclick="resetData()">Home</button>
+        <button class="btn btn-secondary me-2" onclick="resetData()">
+          Home
+        </button>
 
         <!-- Tags Filter -->
         <select
@@ -40,10 +42,23 @@
         >
           <option value="">All Tags</option>
         </select>
+
+        <!-- Date Sort Dropdown -->
+        <select
+          id="sort-order"
+          class="form-select w-auto me-3"
+          onchange="sortDataByDate()"
+        >
+          <option value="desc">Date: Newest First</option>
+          <option value="asc">Date: Oldest First</option>
+        </select>
       </div>
 
       <!-- Data List -->
       <div id="data-list" class="row"></div>
+
+      <!-- Pagination Navigation -->
+      <div id="pagination" class="d-flex justify-content-center mt-4"></div>
     </div>
 
     <script src="assets/script.js"></script>
