@@ -1,4 +1,4 @@
-name: Update Data Files from Issue
+name: Upload Data Files from Issue
 
 on:
   issues:
@@ -9,52 +9,57 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Extract Issue Data and Update Files
-        env:
-          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
-        run: |
-          # 从 Issue 中提取数据
-          ISSUE_BODY="${{ github.event.issue.body }}"
-          echo "$ISSUE_BODY" > issue_data.json
+    - name: Extract Issue Data and Update Files
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # 从 Issue 中获取内容并将其解析为 JSON 格式
+        ISSUE_BODY="${{ github.event.issue.body }}"
+        
+        # 将 Issue 内容写入 JSON 文件
+        echo "$ISSUE_BODY" | jq -R -s '{ "issue_body": . }' > issue_data.json
 
-          # 将新数据添加到 data.json
-          node -e "
-          const fs = require('fs');
-          const newData = require('./issue_data.json');
-          const dataFilePath = './data.json';
-          let data = [];
-          if (fs.existsSync(dataFilePath)) {
-            data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
-          }
-          data.push(newData);
-          fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
-          "
+        # 将新数据添加到 data.json
+        node -e "
+        const fs = require('fs');
+        const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8')).issue_body;
+        const dataFilePath = './data.json';
+        let data = [];
+        if (fs.existsSync(dataFilePath)) {
+          data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
+        }
+        data.push(JSON.parse(newData));
+        fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
+        "
 
-          # 生成/更新 xxxdetail.html
-          node -e "
-          const fs = require('fs');
-          const newData = require('./issue_data.json');
-          const detailsPath = './xxxdetail.html';
-          const htmlContent = \`
-          <html>
-          <head><title>Data Detail</title></head>
-          <body>
-            <h1>\${newData.name}</h1>
-            <p>\${newData.description}</p>
-            <p><strong>Tags:</strong> \${newData.tags}</p>
-          </body>
-          </html>
-          \`;
-          fs.writeFileSync(detailsPath, htmlContent);
-          "
+        # 生成/更新 xxxdetail.html
+        node -e "
+        const fs = require('fs');
+        const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8')).issue_body;
+        const detailsPath = './xxxdetail.html';
+        const htmlContent = \`
+        <html>
+        <head><title>Data Detail</title></head>
+        <body>
+          <h1>\${newData.name}</h1>
+          <p>\${newData.description}</p>
+          <p><strong>Tags:</strong> \${newData.tags}</p>
+          <p><strong>Source:</strong> \${newData.source}</p>
+          <p><strong>Date:</strong> \${newData.date}</p>
+          <p><strong>Download Link:</strong> <a href="\${newData.downloadLink}">\${newData.downloadLink}</a></p>
+        </body>
+        </html>
+        \`;
+        fs.writeFileSync(detailsPath, htmlContent);
+        "
 
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions@github.com"
-          git add data.json xxxdetail.html
-          git commit -m "Update data files from new submission"
-          git push
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions@github.com"
+        git add data.json xxxdetail.html
+        git commit -m "Update data files from new submission"
+        git push
