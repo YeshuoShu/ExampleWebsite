@@ -113,20 +113,21 @@
           downloadLink: document.getElementById("downloadLink").value,
         };
 
-        const issueTitle = `New Data: ${data.name}`;
-        const issueBody = JSON.stringify(data, null, 2);
+        const filename = `data_submissions/${data.name.replace(
+          /\s+/g,
+          "_"
+        )}_${Date.now()}.json`;
 
         await fetch(
-          "https://api.github.com/repos/YeshuoShu/ExampleWebsite/issues",
+          `https://api.github.com/repos/YeshuoShu/ExampleWebsite/contents/${filename}`,
           {
-            method: "POST",
+            method: "PUT",
             headers: {
-              Authorization: `Bearer ${process.env.SECRET_TOKEN}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              title: issueTitle,
-              body: issueBody,
+              message: `New data submission: ${data.name}`,
+              content: btoa(JSON.stringify(data)),
             }),
           }
         )
