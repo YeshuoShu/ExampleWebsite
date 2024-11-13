@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3 # 最新版本，支持 Node.js 20
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20" # 指定 Node.js 版本为 20
 
       - name: Build and deploy
         run: |
