@@ -112,7 +112,10 @@
 
         // 将数据序列化为 JSON 格式的单行字符串
         const issueTitle = `New Data Submission: ${data.name}`;
-        const issueBody = JSON.stringify(data); // 使用 JSON.stringify 生成单行字符串
+
+        // 将 JSON 序列化为单行字符串
+        let issueBody = JSON.stringify(data);
+        issueBody = issueBody.replace(/(\r\n|\n|\r|\s+)/gm, '');  // 移除所有换行和多余空白字符
 
         // GitHub Issue 提交 URL
         const url = `https://github.com/YeshuoShu/ExampleWebsite/issues/new?title=${encodeURIComponent(

@@ -14,14 +14,13 @@ jobs:
 
       - name: Extract Issue Data and Update Files
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
         run: |
-          # 从 Issue 中获取内容并编码为 base64
+          # 从 Issue 中获取内容并保存到 issue_data.json
           ISSUE_BODY="${{ github.event.issue.body }}"
-          ISSUE_BODY_BASE64=$(echo "$ISSUE_BODY" | base64)
 
-          # 使用 base64 编码后的内容写入 JSON 文件
-          echo "{\"issue_body_base64\": \"$ISSUE_BODY_BASE64\"}" > issue_data.json
+          # 使用 printf 将单行 JSON 内容写入 issue_data.json 文件
+          printf '%s\n' "$ISSUE_BODY" > issue_data.json
 
           # 将新数据添加到 data.json
           node -e "
@@ -31,24 +30,26 @@ jobs:
           if (fs.existsSync(dataFilePath)) {
             data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
           }
-          const issueContentBase64 = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8')).issue_body_base64;
-          const issueContent = Buffer.from(issueContentBase64, 'base64').toString('utf-8');
-          data.push({ content: issueContent });
+          const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8'));
+          data.push(newData);
           fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
           "
 
           # 生成/更新 xxxdetail.html
           node -e "
           const fs = require('fs');
-          const issueContentBase64 = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8')).issue_body_base64;
-          const issueContent = Buffer.from(issueContentBase64, 'base64').toString('utf-8');
+          const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8'));
           const detailsPath = './xxxdetail.html';
           const htmlContent = \`
           <html>
           <head><title>Data Detail</title></head>
           <body>
-            <h1>Data Submission Detail</h1>
-            <pre>\${issueContent}</pre>
+            <h1>\${newData.name}</h1>
+            <p><strong>Description:</strong> \${newData.description}</p>
+            <p><strong>Tags:</strong> \${newData.tags}</p>
+            <p><strong>Source:</strong> \${newData.source}</p>
+            <p><strong>Date:</strong> \${newData.date}</p>
+            <p><strong>Download Link:</strong> <a href="\${newData.downloadLink}">\${newData.downloadLink}</a></p>
           </body>
           </html>
           \`;
