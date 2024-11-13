@@ -33,4 +33,4 @@ jobs:
           git commit -m "Deploy to GitHub Pages"
 
           # 推送到 gh-pages 分支
-          git push --force --quiet "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:gh-pages
+          git push --force --quiet "https://${{ secrets.SECRET_TOKEN }}@github.com/${{ github.repository }}.git" master:gh-pages
