@@ -123,6 +123,7 @@
           {
             method: "PUT",
             headers: {
+              Authorization: `Bearer ${process.env.SECRET_TOKEN}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
