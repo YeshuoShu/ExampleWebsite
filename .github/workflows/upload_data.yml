@@ -19,33 +19,37 @@ jobs:
           # 从 Issue 中获取内容并保存到 issue_data.json
           ISSUE_BODY="${{ github.event.issue.body }}"
 
-          # 使用 printf 将 Issue 内容写入 JSON 文件
-          printf '%s' "{\"issue_body\": $ISSUE_BODY}" > issue_data.json
+          # 使用 printf 将单行 JSON 内容写入 issue_data.json 文件
+          printf '%s\n' "$ISSUE_BODY" > issue_data.json
 
           # 将新数据添加到 data.json
           node -e "
           const fs = require('fs');
-          const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8')).issue_body;
           const dataFilePath = './data.json';
           let data = [];
           if (fs.existsSync(dataFilePath)) {
             data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
           }
-          data.push(JSON.parse(newData));
+          const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8'));
+          data.push(newData);
           fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
           "
 
           # 生成/更新 xxxdetail.html
           node -e "
           const fs = require('fs');
-          const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8')).issue_body;
+          const newData = JSON.parse(fs.readFileSync('./issue_data.json', 'utf8'));
           const detailsPath = './xxxdetail.html';
           const htmlContent = \`
           <html>
           <head><title>Data Detail</title></head>
           <body>
-            <h1>Data Submission Detail</h1>
-            <pre>\${newData}</pre>
+            <h1>\${newData.name}</h1>
+            <p><strong>Description:</strong> \${newData.description}</p>
+            <p><strong>Tags:</strong> \${newData.tags}</p>
+            <p><strong>Source:</strong> \${newData.source}</p>
+            <p><strong>Date:</strong> \${newData.date}</p>
+            <p><strong>Download Link:</strong> <a href="\${newData.downloadLink}">\${newData.downloadLink}</a></p>
           </body>
           </html>
           \`;

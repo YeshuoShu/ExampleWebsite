@@ -110,9 +110,9 @@
           downloadLink: document.getElementById("downloadLink").value,
         };
 
-        // 将数据序列化为 JSON 格式
+        // 将数据序列化为 JSON 格式的单行字符串
         const issueTitle = `New Data Submission: ${data.name}`;
-        const issueBody = JSON.stringify(data, null, 2); // 直接转换为 JSON 格式字符串
+        const issueBody = JSON.stringify(data); // 使用 JSON.stringify 生成单行字符串
 
         // GitHub Issue 提交 URL
         const url = `https://github.com/YeshuoShu/ExampleWebsite/issues/new?title=${encodeURIComponent(
