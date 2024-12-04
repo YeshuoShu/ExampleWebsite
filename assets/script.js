@@ -25,18 +25,13 @@ async function fetchData() {
   }
 }
 
-// Parse CSV data
+// Parse CSV data using PapaParse
 function parseCSV(csvText) {
-  const lines = csvText.trim().split("\n");
-  const headers = lines[0].split(",");
-  return lines.slice(1).map((line) => {
-    const values = line.split(",");
-    const item = {};
-    headers.forEach((header, index) => {
-      item[header.trim()] = values[index].trim();
-    });
-    return item;
+  const parsed = Papa.parse(csvText, {
+    header: true,
+    skipEmptyLines: true
   });
+  return parsed.data;
 }
 
 // Populate data list
