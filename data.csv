@@ -1,0 +1,3 @@
+name,description,tags,source,publication_date,details_link,geographic_extent,temporal_extent,file_size,original_link
+Dataset 1,This dataset contains information about environmental factors.,"environment, climate",Department of Environmental Studies,2023-10-01,details/dataset1.html,"34.0522N, 118.2437W - 35.0522N, 119.2437W",2023-01-01 to 2023-06-30,10 MB,https://example.com/dataset1.csv
+Dataset 2,This dataset includes data on population demographics.,"population, demographics",Bureau of Population,2023-09-15,details/dataset2.html,"34.0522N, 118.2437W - 35.0522N, 119.2437W",2023-01-01 to 2023-06-30,10 MB,https://example.com/dataset2.csv

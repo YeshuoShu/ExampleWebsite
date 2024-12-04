@@ -1,18 +1,42 @@
 let itemsPerPage = 10; // Number of items to show per page
 let currentPage = 1; // Current page number
 
-// Fetch data from data.json and populate data list
+// Fetch data from data.csv and populate data list
 window.originalData = [];
 window.filteredData = [];
 
-// Fetch data from data.json and populate data list
+// Fetch data from data.csv and populate data list
 async function fetchData() {
-  const response = await fetch("data.json");
-  const data = await response.json();
-  window.originalData = data;
-  window.filteredData = data; // Initially, filteredData equals originalData
-  populateTagFilter(data);
-  displayPage(data);
+  try {
+    const response = await fetch("data.csv");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const csvText = await response.text();
+    console.log("CSV Text:", csvText); // 调试信息
+    const data = parseCSV(csvText);
+    console.log("Parsed Data:", data); // 调试信息
+    window.originalData = data;
+    window.filteredData = data; // Initially, filteredData equals originalData
+    populateTagFilter(data);
+    displayPage(data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+// Parse CSV data
+function parseCSV(csvText) {
+  const lines = csvText.trim().split("\n");
+  const headers = lines[0].split(",");
+  return lines.slice(1).map((line) => {
+    const values = line.split(",");
+    const item = {};
+    headers.forEach((header, index) => {
+      item[header.trim()] = values[index].trim();
+    });
+    return item;
+  });
 }
 
 // Populate data list
@@ -32,7 +56,7 @@ function populateDataList(data) {
           <p class="card-text">${item.description}</p>
           <p><strong>Source:</strong> ${item.source}</p>
           <p><strong>Publication Date:</strong> ${item.publication_date}</p>
-          <p><strong>Tags:</strong> ${item.tags.join(", ")}</p>
+          <p><strong>Tags:</strong> ${item.tags.split(",").join(", ")}</p>
           <p><strong>Geographic Extent:</strong> ${item.geographic_extent}</p>
           <p><strong>Temporal Extent:</strong> ${item.temporal_extent}</p>
           <p><strong>File Size:</strong> ${item.file_size}</p>
@@ -48,10 +72,17 @@ function populateDataList(data) {
 
 // Populate tag filter options
 function populateTagFilter(data) {
-  const tagSet = new Set();
-  data.forEach((item) => item.tags.forEach((tag) => tagSet.add(tag)));
-
   const tagFilter = document.getElementById("tag-filter");
+  if (!tagFilter) {
+    console.error("Tag filter element not found");
+    return;
+  }
+
+  const tagSet = new Set();
+  data.forEach((item) =>
+    item.tags.split(",").forEach((tag) => tagSet.add(tag.trim()))
+  );
+
   tagSet.forEach((tag) => {
     const option = document.createElement("option");
     option.value = tag;
@@ -120,7 +151,12 @@ function renderPagination(totalItems) {
 async function filterData() {
   const selectedTag = document.getElementById("tag-filter").value;
   window.filteredData = selectedTag
-    ? window.originalData.filter((item) => item.tags.includes(selectedTag))
+    ? window.originalData.filter((item) =>
+        item.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .includes(selectedTag)
+      )
     : window.originalData;
 
   currentPage = 1; // Reset to the first page
@@ -139,8 +175,8 @@ function sortDataByDate() {
 // Utility function to sort data based on date
 function sortData(data, order) {
   return data.slice().sort((a, b) => {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
+    const dateA = new Date(a.publication_date);
+    const dateB = new Date(b.publication_date);
     return order === "desc" ? dateB - dateA : dateA - dateB;
   });
 }
@@ -158,6 +194,13 @@ async function searchData() {
   const sortOrder = document.getElementById("sort-order").value;
   window.filteredData = sortData(window.filteredData, sortOrder);
   displayPage(window.filteredData);
+}
+
+// Handle Enter key press in search box
+function handleSearchKey(event) {
+  if (event.key === "Enter") {
+    searchData();
+  }
 }
 
 // Reset data to show all items
