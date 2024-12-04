@@ -29,7 +29,7 @@ async function fetchData() {
 function parseCSV(csvText) {
   const parsed = Papa.parse(csvText, {
     header: true,
-    skipEmptyLines: true
+    skipEmptyLines: true,
   });
   return parsed.data;
 }
@@ -45,9 +45,7 @@ function populateDataList(data) {
     dataItem.innerHTML = `
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title"><a href="${
-            item.details_link
-          }" class="text-decoration-none">${item.name}</a></h5>
+          <h5 class="card-title">${item.name}</h5>
           <p class="card-text">${item.description}</p>
           <p><strong>Source:</strong> ${item.source}</p>
           <p><strong>Publication Date:</strong> ${item.publication_date}</p>
