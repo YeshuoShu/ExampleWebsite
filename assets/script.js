@@ -1,14 +1,16 @@
 let itemsPerPage = 10; // Number of items to show per page
 let currentPage = 1; // Current page number
 
-// Fetch data from data.csv and populate data list
+// Fetch data from Google Sheets CSV and populate data list
 window.originalData = [];
 window.filteredData = [];
 
-// Fetch data from data.csv and populate data list
+// Fetch data from Google Sheets CSV and populate data list
 async function fetchData() {
   try {
-    const response = await fetch("data.csv");
+    const response = await fetch(
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSy-40VQ58WsSvpb_kc6d-qmukgnmR54DzL8W62juVP3xOp_uPtjNKMseHAPJj70TKmLVcAF1HG9r-Y/pub?gid=0&single=true&output=csv"
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
