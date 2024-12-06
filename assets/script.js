@@ -47,20 +47,24 @@ function populateDataList(data) {
     dataItem.innerHTML = `
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title">${item.name}</h5>
-          <p class="card-text">${item.description}</p>
-          <p><strong>Source:</strong> ${item.source}</p>
-          <p><strong>Publication Date:</strong> ${item.publication_date}</p>
-          <p><strong>Tags:</strong> ${item.tags.split(",").join(", ")}</p>
-          <p><strong>Geographic Extent:</strong> ${item.geographic_extent}</p>
-          <p><strong>Temporal Extent:</strong> ${item.temporal_extent}</p>
-          <p><strong>File Size:</strong> ${item.file_size}</p>
-          <a href="${
-            item.original_link
-          }" class="btn btn-success mt-2" target="_blank" download>Original Link</a>
-          <button class="btn btn-primary text-white mt-2" onclick="showDownloadInstructions('${
-            item.name
-          }', '${item.download_instruction}')">Download Instruction</button>
+          <div>
+            <h5 class="card-title">${item.name}</h5>
+            <p class="card-text">${item.description}</p>
+            <p><strong>Source:</strong> ${item.source}</p>
+            <p><strong>Publication Date:</strong> ${item.publication_date}</p>
+            <p><strong>Tags:</strong> ${item.tags.split(",").join(", ")}</p>
+            <p><strong>Geographic Extent:</strong> ${item.geographic_extent}</p>
+            <p><strong>Temporal Extent:</strong> ${item.temporal_extent}</p>
+            <p><strong>File Size:</strong> ${item.file_size}</p>
+          </div>
+          <div class="card-buttons">
+            <a href="${
+              item.original_link
+            }" class="btn btn-success" target="_blank" download>Original Link</a>
+            <button class="btn btn-primary text-white" onclick="showDownloadInstructions('${
+              item.name
+            }', '${item.download_instruction}')">Download Instruction</button>
+          </div>
         </div>
       </div>
     `;
@@ -76,7 +80,9 @@ function showDownloadInstructions(name, downloadLink) {
   modalTitle.textContent = `Download Instruction`;
   modalBody.innerHTML = `<p class="text-muted">${downloadLink}</p>`;
 
-  const downloadModal = new bootstrap.Modal(document.getElementById("downloadModal"));
+  const downloadModal = new bootstrap.Modal(
+    document.getElementById("downloadModal")
+  );
   downloadModal.show();
 }
 
