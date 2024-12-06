@@ -19,9 +19,9 @@ async function fetchData() {
     const data = parseCSV(csvText);
     console.log("Parsed Data:", data); // 调试信息
     window.originalData = data;
-    window.filteredData = data; // Initially, filteredData equals originalData
+    window.filteredData = sortData(data, "desc"); // 默认按日期降序排序
     populateTagFilter(data);
-    displayPage(data);
+    displayPage(window.filteredData);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
