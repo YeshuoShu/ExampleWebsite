@@ -5,3 +5,11 @@ body {
 .card-title {
   color: #007bff;
 }
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.card-text {
+  font-size: 0.9rem; /* 调整 description 的字体大小 */
+}

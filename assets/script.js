@@ -43,7 +43,7 @@ function populateDataList(data) {
 
   data.forEach((item) => {
     const dataItem = document.createElement("div");
-    dataItem.className = "col-md-6 mb-4";
+    dataItem.className = "col-md-4 mb-4"; // 调整为每行显示三个数据格子
     dataItem.innerHTML = `
       <div class="card h-100">
         <div class="card-body">
@@ -57,12 +57,27 @@ function populateDataList(data) {
           <p><strong>File Size:</strong> ${item.file_size}</p>
           <a href="${
             item.original_link
-          }" class="btn btn-success mt-2" download>Original Link</a>
+          }" class="btn btn-success mt-2" target="_blank" download>Original Link</a>
+          <button class="btn btn-primary text-white mt-2" onclick="showDownloadInstructions('${
+            item.name
+          }', '${item.download_instruction}')">Download Instruction</button>
         </div>
       </div>
     `;
     dataList.appendChild(dataItem);
   });
+}
+
+// Show download instructions in a Bootstrap modal
+function showDownloadInstructions(name, downloadLink) {
+  const modalTitle = document.getElementById("downloadModalLabel");
+  const modalBody = document.getElementById("downloadModalBody");
+
+  modalTitle.textContent = `Download Instruction`;
+  modalBody.innerHTML = `<p class="text-muted">${downloadLink}</p>`;
+
+  const downloadModal = new bootstrap.Modal(document.getElementById("downloadModal"));
+  downloadModal.show();
 }
 
 // Populate tag filter options
