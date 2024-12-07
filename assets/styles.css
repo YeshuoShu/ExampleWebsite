@@ -28,3 +28,16 @@ body {
   /* 控制按钮之间的间距 */
   margin-top: auto;
 }
+
+.star-rating {
+  color: #ffc107; /* 金色 */
+}
+
+.star-rating .far {
+  color: #e4e5e9; /* 灰色 */
+}
+
+.btn-cite {
+  background-color: #17a2b8; /* 浅蓝色 */
+  color: #fff;
+}

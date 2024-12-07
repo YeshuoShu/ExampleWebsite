@@ -56,6 +56,7 @@ function populateDataList(data) {
             <p><strong>Geographic Extent:</strong> ${item.geographic_extent}</p>
             <p><strong>Temporal Extent:</strong> ${item.temporal_extent}</p>
             <p><strong>File Size:</strong> ${item.file_size}</p>
+            <p><strong>Rating:</strong> <span class="star-rating">${renderStars(item.rating)}</span></p>
           </div>
           <div class="card-buttons">
             <a href="${
@@ -63,13 +64,41 @@ function populateDataList(data) {
             }" class="btn btn-success" target="_blank" download>Original Link</a>
             <button class="btn btn-primary text-white" onclick="showDownloadInstructions('${
               item.name
-            }', '${item.download_instruction}')">Download Instruction</button>
+            }', '${item.download_instruction}')">Download</button>
+            <button class="btn btn-cite" onclick="showCiteInstructions('${
+              item.name
+            }', '${item.cite}')">Cite</button>
           </div>
         </div>
       </div>
     `;
     dataList.appendChild(dataItem);
   });
+}
+
+// Render stars for rating
+function renderStars(rating) {
+  const fullStars = Math.floor(rating); // 计算完整的星星数量
+  const halfStar = rating % 1 !== 0; // 判断是否有半颗星
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0); // 计算空星数量
+  let stars = "";
+
+  // 渲染完整的星星
+  for (let i = 0; i < fullStars; i++) {
+    stars += '<i class="fas fa-star"></i>';
+  }
+
+  // 渲染半颗星
+  if (halfStar) {
+    stars += '<i class="fas fa-star-half-alt"></i>';
+  }
+
+  // 渲染空星
+  for (let i = 0; i < emptyStars; i++) {
+    stars += '<i class="far fa-star"></i>';
+  }
+
+  return stars;
 }
 
 // Show download instructions in a Bootstrap modal
@@ -84,6 +113,28 @@ function showDownloadInstructions(name, downloadLink) {
     document.getElementById("downloadModal")
   );
   downloadModal.show();
+}
+
+// Show cite instructions in a Bootstrap modal
+function showCiteInstructions(name, cite) {
+  const modalTitle = document.getElementById("downloadModalLabel");
+  const modalBody = document.getElementById("downloadModalBody");
+
+  modalTitle.textContent = `Cite`;
+  modalBody.innerHTML = `<p class="text-muted" id="citeText">${cite}</p>`;
+
+  const downloadModal = new bootstrap.Modal(
+    document.getElementById("downloadModal")
+  );
+  downloadModal.show();
+
+  // Add event listener to copy button
+  const copyButton = document.getElementById("copyButton");
+  copyButton.onclick = () => {
+    navigator.clipboard.writeText(cite).then(() => {
+      alert("Cite text copied to clipboard!");
+    });
+  };
 }
 
 // Populate tag filter options
@@ -188,12 +239,28 @@ function sortDataByDate() {
   displayPage(window.filteredData);
 }
 
+// Sort data by rating based on selected sort order
+function sortDataByRating() {
+  const sortOrder = document.getElementById("rating-sort-order").value;
+  window.filteredData = sortDataByRatingOrder(window.filteredData, sortOrder);
+  displayPage(window.filteredData);
+}
+
 // Utility function to sort data based on date
 function sortData(data, order) {
   return data.slice().sort((a, b) => {
     const dateA = new Date(a.publication_date);
     const dateB = new Date(b.publication_date);
     return order === "desc" ? dateB - dateA : dateA - dateB;
+  });
+}
+
+// Utility function to sort data based on rating
+function sortDataByRatingOrder(data, order) {
+  return data.slice().sort((a, b) => {
+    const ratingA = parseFloat(a.rating);
+    const ratingB = parseFloat(b.rating);
+    return order === "desc" ? ratingB - ratingA : ratingA - ratingB;
   });
 }
 
@@ -224,6 +291,7 @@ function resetData() {
   document.getElementById("search-box").value = ""; // Clear search box
   document.getElementById("tag-filter").value = ""; // Reset tag filter
   document.getElementById("sort-order").value = "desc"; // Reset sort order
+  document.getElementById("rating-sort-order").value = "desc"; // Reset rating sort order
   window.filteredData = window.originalData; // Reset data to original data
   currentPage = 1; // Reset to the first page
   displayPage(window.filteredData); // Display all data
