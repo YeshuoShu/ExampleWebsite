@@ -9,7 +9,19 @@ body {
 }
 
 .card-title {
-  color: #007bff;
+  color: #07528C;
+  text-decoration: none; /* 去掉下划线 */
+  font-weight: 500; /* 调整 font-weight */
+}
+
+.card-title a {
+  color: #07528C;
+  text-decoration: none; /* 去掉下划线 */
+  font-weight: 500; /* 调整 font-weight */
+}
+
+.card-title a:hover {
+  text-decoration: underline; /* 悬停时显示下划线 */
 }
 
 .text-muted {
@@ -46,7 +58,7 @@ body {
 }
 
 .btn-cite {
-  background-color: #17a2b8;
+  background-color: #036B7D;
   /* 浅蓝色 */
   color: #fff;
 }
@@ -56,4 +68,44 @@ body {
   background-color: #f6f8fa !important;
   padding: 1em;
   border-radius: 5px;
+}
+
+/* 调整关键词的 font-weight */
+.card-body p strong {
+  font-weight: 600;
+}
+
+/* 调整关键词段落/行的字体大小，并减小段落/行之间的间距 */
+.card-body p {
+  margin-bottom: 0.5rem;
+}
+
+/* 设置按钮颜色 */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: #07528C;
+  border-color: #07528C;
+}
+
+/* 设置搜索框旁的 All Tags、Date 和 Rating 排序的框背景颜色 */
+.form-select {
+  background-color: #DCE1E5;
+}
+
+/* 设置弹出窗口中 Close 按钮的背景颜色 */
+.modal-footer .btn-secondary {
+  background-color: #DCE1E5;
+  border-color: #DCE1E5;
+  color: #000;
+}
+
+/* 设置选中链接的颜色 */
+.nav-link.active {
+  color: #febc11 !important;
 }

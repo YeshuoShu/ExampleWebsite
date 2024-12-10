@@ -11,6 +11,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/github.min.css">
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+  <style>
+    .markdown-body {
+      font-family: Avenir, "Century Gothic", sans-serif !important;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6,
+    .markdown-body strong {
+      font-weight: 500;
+    }
+
+    /* 隐藏解析后的 README.md 中的标题 */
+    .markdown-body h1 {
+      display: none;
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
 </head>
@@ -26,15 +46,6 @@
   </div>
 
   <script>
-    // 动态加载 navbar.html
-    async function loadNavbar() {
-      const response = await fetch("navbar.html");
-      const navbarHtml = await response.text();
-      document.getElementById("navbar-placeholder").innerHTML = navbarHtml;
-    }
-
-    loadNavbar();
-
     async function loadReadme() {
       const response = await fetch("README.md");
       const readmeText = await response.text();
@@ -51,6 +62,7 @@
 
     loadReadme();
   </script>
+  <script src="assets/script.js"></script>
 </body>
 
 </html>

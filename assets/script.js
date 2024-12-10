@@ -46,7 +46,7 @@ function populateDataList(data) {
       <div class="card h-100">
         <div class="card-body">
           <div>
-            <h5 class="card-title">${item.name}</h5>
+            <h5 class="card-title"><a href="${item.original_link}" target="_blank">${item.name}</a></h5>
             <p class="card-text">${item.description}</p>
             <p><strong>Source:</strong> ${item.source}</p>
             <p><strong>Publication Date:</strong> ${item.publication_date}</p>
@@ -59,9 +59,6 @@ function populateDataList(data) {
             )}</span></p>
           </div>
           <div class="card-buttons">
-            <a href="${
-              item.original_link
-            }" class="btn btn-success" target="_blank" download>Original Link</a>
             <button class="btn btn-primary text-white" onclick="showDownloadInstructions('${
               item.name
             }', '${item.download_instruction}')">Download</button>
@@ -312,6 +309,36 @@ function resetData() {
   currentPage = 1; // Reset to the first page
   displayPage(window.filteredData); // Display all data
 }
+
+// 动态加载 navbar.html
+async function loadNavbar() {
+  const response = await fetch("navbar.html");
+  const navbarHtml = await response.text();
+  document.getElementById("navbar-placeholder").innerHTML = navbarHtml;
+
+  // 添加导航栏链接的点击事件处理程序
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function() {
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // 根据当前页面设置活动链接
+  const currentPath = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-link').forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+      link.classList.add('active');
+    }
+  });
+
+  // 默认设置 Home 为活动链接
+  if (!currentPath || currentPath === 'index.html') {
+    document.querySelector('.nav-link[data-target="home"]').classList.add('active');
+  }
+}
+
+loadNavbar();
 
 // Load data on page load
 fetchData();
