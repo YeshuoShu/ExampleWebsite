@@ -15,9 +15,7 @@ async function fetchData() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const csvText = await response.text();
-    console.log("CSV Text:", csvText); // 调试信息
     const data = parseCSV(csvText);
-    console.log("Parsed Data:", data); // 调试信息
     window.originalData = data;
     window.filteredData = sortData(data, "desc"); // 默认按日期降序排序
     populateTagFilter(data);
@@ -56,7 +54,9 @@ function populateDataList(data) {
             <p><strong>Geographic Extent:</strong> ${item.geographic_extent}</p>
             <p><strong>Temporal Extent:</strong> ${item.temporal_extent}</p>
             <p><strong>File Size:</strong> ${item.file_size}</p>
-            <p><strong>Rating:</strong> <span class="star-rating">${renderStars(item.rating)}</span></p>
+            <p><strong>Rating:</strong> <span class="star-rating">${renderStars(
+              item.rating
+            )}</span></p>
           </div>
           <div class="card-buttons">
             <a href="${
@@ -135,6 +135,22 @@ function showCiteInstructions(name, cite) {
       alert("Cite text copied to clipboard!");
     });
   };
+}
+
+// Show README content in the page
+async function showReadme() {
+  const response = await fetch("README.md");
+  const readmeText = await response.text();
+  const readmeHtml = marked.parse(readmeText);
+
+  const readmeContent = document.getElementById("readme-content");
+  readmeContent.innerHTML = readmeHtml;
+  readmeContent.style.display = "block";
+
+  // 手动调用 highlight.js 来处理代码块
+  document.querySelectorAll("pre code").forEach((block) => {
+    hljs.highlightElement(block);
+  });
 }
 
 // Populate tag filter options

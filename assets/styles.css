@@ -1,5 +1,11 @@
 body {
-  background-color: #f8f9fa;
+  background-color: #ffffff;
+  font-family: Avenir, "Century Gothic", sans-serif;
+}
+
+.navbar-brand,
+.nav-link {
+  font-family: Avenir, "Century Gothic", sans-serif;
 }
 
 .card-title {
@@ -30,14 +36,24 @@ body {
 }
 
 .star-rating {
-  color: #ffc107; /* 金色 */
+  color: #ffc107;
+  /* 金色 */
 }
 
 .star-rating .far {
-  color: #e4e5e9; /* 灰色 */
+  color: #e4e5e9;
+  /* 灰色 */
 }
 
 .btn-cite {
-  background-color: #17a2b8; /* 浅蓝色 */
+  background-color: #17a2b8;
+  /* 浅蓝色 */
   color: #fff;
+}
+
+/* 确保代码块有灰色的背景颜色 */
+.markdown-body pre code {
+  background-color: #f6f8fa !important;
+  padding: 1em;
+  border-radius: 5px;
 }

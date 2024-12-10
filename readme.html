@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>README - MOVE Open Data Archive</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/github.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <div id="navbar-placeholder"></div>
+
+  <div class="container my-5">
+    <div id="readme-content" class="markdown-body">
+      <!-- README content will be inserted here -->
+    </div>
+  </div>
+
+  <script>
+    // 动态加载 navbar.html
+    async function loadNavbar() {
+      const response = await fetch("navbar.html");
+      const navbarHtml = await response.text();
+      document.getElementById("navbar-placeholder").innerHTML = navbarHtml;
+    }
+
+    loadNavbar();
+
+    async function loadReadme() {
+      const response = await fetch("README.md");
+      const readmeText = await response.text();
+      const readmeHtml = marked.parse(readmeText);
+
+      const readmeContent = document.getElementById("readme-content");
+      readmeContent.innerHTML = readmeHtml;
+
+      // 手动调用 highlight.js 来处理代码块
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    }
+
+    loadReadme();
+  </script>
+</body>
+
+</html>
