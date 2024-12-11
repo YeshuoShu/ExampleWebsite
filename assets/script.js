@@ -1,4 +1,4 @@
-let itemsPerPage = 10; // Number of items to show per page
+let itemsPerPage = 9; // Number of items to show per page
 let currentPage = 1; // Current page number
 
 // Fetch data from Google Sheets CSV and populate data list
@@ -46,7 +46,9 @@ function populateDataList(data) {
       <div class="card h-100">
         <div class="card-body">
           <div>
-            <h5 class="card-title"><a href="${item.original_link}" target="_blank">${item.name}</a></h5>
+            <h5 class="card-title"><a href="${
+              item.original_link
+            }" target="_blank">${item.name}</a></h5>
             <p class="card-text">${item.description}</p>
             <p><strong>Source:</strong> ${item.source}</p>
             <p><strong>Publication Date:</strong> ${item.publication_date}</p>
@@ -317,26 +319,40 @@ async function loadNavbar() {
   document.getElementById("navbar-placeholder").innerHTML = navbarHtml;
 
   // 添加导航栏链接的点击事件处理程序
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function() {
-      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-      this.classList.add('active');
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", function () {
+      document
+        .querySelectorAll(".nav-link")
+        .forEach((link) => link.classList.remove("active"));
+      this.classList.add("active");
     });
   });
 
   // 根据当前页面设置活动链接
-  const currentPath = window.location.pathname.split('/').pop();
-  document.querySelectorAll('.nav-link').forEach(link => {
-    if (link.getAttribute('href') === currentPath) {
-      link.classList.add('active');
+  setActiveNavLink();
+}
+
+// 根据当前页面设置活动链接
+function setActiveNavLink() {
+  const currentPath = window.location.pathname.split("/").pop();
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    if (link.getAttribute("href") === currentPath) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
     }
   });
 
   // 默认设置 Home 为活动链接
-  if (!currentPath || currentPath === 'index.html') {
-    document.querySelector('.nav-link[data-target="home"]').classList.add('active');
+  if (!currentPath || currentPath === "index.html") {
+    document
+      .querySelector('.nav-link[data-target="home"]')
+      .classList.add("active");
   }
 }
+
+// 监听浏览器的前进和后退事件
+window.addEventListener("popstate", setActiveNavLink);
 
 loadNavbar();
 
