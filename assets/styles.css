@@ -1,7 +1,7 @@
 body {
   background-color: #ffffff;
   font-family: Avenir, "Century Gothic", sans-serif;
-  margin-top: 100px;
+  margin-top: 100px; /* Ensure space for fixed navbar */
 }
 
 .navbar-brand,
@@ -11,23 +11,18 @@ body {
 
 .card-title {
   color: #07528C;
-  text-decoration: none;
-  /* 去掉下划线 */
-  font-weight: 500;
-  /* 调整 font-weight */
+  text-decoration: none; /* Remove underline */
+  font-weight: 500; /* Adjust font-weight */
 }
 
 .card-title a {
   color: #07528C;
-  text-decoration: none;
-  /* 去掉下划线 */
-  font-weight: 500;
-  /* 调整 font-weight */
+  text-decoration: none; /* Remove underline */
+  font-weight: 500; /* Adjust font-weight */
 }
 
 .card-title a:hover {
-  text-decoration: underline;
-  /* 悬停时显示下划线 */
+  text-decoration: underline; /* Show underline on hover */
 }
 
 .text-muted {
@@ -35,8 +30,7 @@ body {
 }
 
 .card-text {
-  font-size: 0.9rem;
-  /* 调整 description 的字体大小 */
+  font-size: 0.9rem; /* Adjust description font size */
 }
 
 .card-body {
@@ -48,45 +42,41 @@ body {
 .card-buttons {
   display: flex;
   justify-content: flex-start;
-  gap: 0.5rem;
-  /* 控制按钮之间的间距 */
+  gap: 0.5rem; /* Control spacing between buttons */
   margin-top: auto;
 }
 
 .star-rating {
-  color: #febc11;
-  /* 金色 */
+  color: #febc11; /* Gold color */
 }
 
 .star-rating .far {
-  color: #e4e5e9;
-  /* 灰色 */
+  color: #e4e5e9; /* Gray color */
 }
 
 .btn-cite {
-  background-color: #036B7D;
-  /* 浅蓝色 */
+  background-color: #036B7D; /* Light blue color */
   color: #fff;
 }
 
-/* 确保代码块有灰色的背景颜色 */
+/* Ensure code blocks have a gray background color */
 .markdown-body pre code {
   background-color: #f6f8fa !important;
   padding: 1em;
   border-radius: 5px;
 }
 
-/* 调整关键词的 font-weight */
+/* Adjust font-weight for keywords */
 .card-body p strong {
   font-weight: 600;
 }
 
-/* 调整关键词段落/行的字体大小，并减小段落/行之间的间距 */
+/* Adjust font size and reduce spacing between paragraphs/lines for keywords */
 .card-body p {
   margin-bottom: 0.5rem;
 }
 
-/* 设置按钮颜色 */
+/* Set button colors */
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:focus,
@@ -108,24 +98,24 @@ body {
   color: #fff;
 }
 
-/* 设置搜索框旁的 All Tags、Date 和 Rating 排序的框背景颜色 */
+/* Set background color for All Tags, Date, and Rating sort dropdowns */
 .form-select {
   background-color: #DCE1E5;
 }
 
-/* 设置弹出窗口中 Close 按钮的背景颜色 */
+/* Set background color for Close button in modal */
 .modal-footer .btn-secondary {
   background-color: #DCE1E5;
   border-color: #DCE1E5;
   color: #000;
 }
 
-/* 设置选中链接的颜色 */
+/* Set active link color */
 .nav-link.active {
   color: #febc11 !important;
 }
 
-/* 鼠标悬停在图片上时变成点击的手型指针 */
+/* Change cursor to pointer when hovering over the logo */
 .navbar-brand img {
   cursor: pointer;
 }
@@ -136,15 +126,15 @@ body {
   margin-right: 10px;
 }
 
-/* 设置竖线的颜色和样式 */
+/* Set color and style for the divider */
 .navbar-divider {
   color: #ffffff;
-  margin: 0 10px 0 -2px; /* 调整 margin 属性，使竖线向左移动 */
+  margin: 0 10px 0 -2px; /* Adjust margin to move the divider left */
   font-size: 20px;
   line-height: 30px;
 }
 
-/* 固定导航栏 */
+/* Fix navbar at the top */
 .navbar {
   position: fixed;
   top: 0;

@@ -26,7 +26,7 @@
       font-weight: 500;
     }
 
-    /* 目录栏样式 */
+    /* Table of Contents (TOC) styles */
     .toc {
       position: fixed;
       top: 100px;
@@ -56,7 +56,8 @@
       margin-left: 30px !important;
     }
 
-    .toc li.ms-3::before, .toc li.ms-4::before {
+    .toc li.ms-3::before,
+    .toc li.ms-4::before {
       content: "•";
       color: #07528C;
       margin-right: 10px;
@@ -70,6 +71,11 @@
 
     .toc a:hover {
       text-decoration: underline;
+    }
+
+    .content {
+      margin-left: 240px;
+      /* 200px (toc width) + 20px (desired gap) + 20px (toc padding) */
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -87,7 +93,7 @@
           <!-- Table of Contents will be inserted here -->
         </div>
       </div>
-      <div class="col-md-9" style="margin-left: 240px;">
+      <div class="col-md-9 content">
         <div id="readme-content" class="markdown-body">
           <!-- README content will be inserted here -->
         </div>
@@ -104,12 +110,12 @@
       const readmeContent = document.getElementById("readme-content");
       readmeContent.innerHTML = readmeHtml;
 
-      // 手动调用 highlight.js 来处理代码块
+      // Manually call highlight.js to handle code blocks
       document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightElement(block);
       });
 
-      // 生成目录
+      // Generate Table of Contents (TOC)
       generateTOC();
     }
 

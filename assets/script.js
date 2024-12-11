@@ -17,7 +17,7 @@ async function fetchData() {
     const csvText = await response.text();
     const data = parseCSV(csvText);
     window.originalData = data;
-    window.filteredData = sortData(data, "desc"); // 默认按日期降序排序
+    window.filteredData = sortData(data, "desc"); // Default sort by date in descending order
     populateTagFilter(data);
     displayPage(window.filteredData);
   } catch (error) {
@@ -41,7 +41,7 @@ function populateDataList(data) {
 
   data.forEach((item) => {
     const dataItem = document.createElement("div");
-    dataItem.className = "col-md-4 mb-4"; // 调整为每行显示三个数据格子
+    dataItem.className = "col-md-4 mb-4"; // Adjust to show three data cards per row
     dataItem.innerHTML = `
       <div class="card h-100">
         <div class="card-body">
@@ -77,22 +77,22 @@ function populateDataList(data) {
 
 // Render stars for rating
 function renderStars(rating) {
-  const fullStars = Math.floor(rating); // 计算完整的星星数量
-  const halfStar = rating % 1 !== 0; // 判断是否有半颗星
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0); // 计算空星数量
+  const fullStars = Math.floor(rating); // Calculate the number of full stars
+  const halfStar = rating % 1 !== 0; // Determine if there is a half star
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0); // Calculate the number of empty stars
   let stars = "";
 
-  // 渲染完整的星星
+  // Render full stars
   for (let i = 0; i < fullStars; i++) {
     stars += '<i class="fas fa-star"></i>';
   }
 
-  // 渲染半颗星
+  // Render half star
   if (halfStar) {
     stars += '<i class="fas fa-star-half-alt"></i>';
   }
 
-  // 渲染空星
+  // Render empty stars
   for (let i = 0; i < emptyStars; i++) {
     stars += '<i class="far fa-star"></i>';
   }
@@ -146,7 +146,7 @@ async function showReadme() {
   readmeContent.innerHTML = readmeHtml;
   readmeContent.style.display = "block";
 
-  // 手动调用 highlight.js 来处理代码块
+  // Manually call highlight.js to handle code blocks
   document.querySelectorAll("pre code").forEach((block) => {
     hljs.highlightElement(block);
   });
@@ -312,13 +312,13 @@ function resetData() {
   displayPage(window.filteredData); // Display all data
 }
 
-// 动态加载 navbar.html
+// Dynamically load navbar.html
 async function loadNavbar() {
   const response = await fetch("navbar.html");
   const navbarHtml = await response.text();
   document.getElementById("navbar-placeholder").innerHTML = navbarHtml;
 
-  // 添加导航栏链接的点击事件处理程序
+  // Add click event handlers to navbar links
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", function () {
       document
@@ -328,11 +328,11 @@ async function loadNavbar() {
     });
   });
 
-  // 根据当前页面设置活动链接
+  // Set active link based on current page
   setActiveNavLink();
 }
 
-// 根据当前页面设置活动链接
+// Set active link based on current page
 function setActiveNavLink() {
   const currentPath = window.location.pathname.split("/").pop();
   document.querySelectorAll(".nav-link").forEach((link) => {
@@ -343,7 +343,7 @@ function setActiveNavLink() {
     }
   });
 
-  // 默认设置 Home 为活动链接
+  // Default to setting Home as active link
   if (!currentPath || currentPath === "index.html") {
     document
       .querySelector('.nav-link[data-target="home"]')
@@ -351,7 +351,7 @@ function setActiveNavLink() {
   }
 }
 
-// 监听浏览器的前进和后退事件
+// Listen for browser forward and back events
 window.addEventListener("popstate", setActiveNavLink);
 
 loadNavbar();
